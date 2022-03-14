@@ -2,7 +2,7 @@ package com.example.delivery_app
 
 object Constants {
     //=====API CONSTANTS=====//
-    const val MOCK_API_URL = "http://demo4129247.mockable.io/"
+    const val MOCK_API_URL = "https://demo4129247.mockable.io/"
 
     //=====FRAGMENT TAGS=====//
     const val ORDER_LIST_SCREEN_TAG = "ORDER_LIST_SCREEN_TAG"

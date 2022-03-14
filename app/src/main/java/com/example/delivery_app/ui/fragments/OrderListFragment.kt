@@ -8,7 +8,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.delivery_app.Constants
 import com.example.delivery_app.databinding.FragmentOrderListBinding
+import com.example.delivery_app.extensions.addFragmentOnTopWithAnimationLeftToRight
 import com.example.delivery_app.models.DeliveryOrder
 import com.example.delivery_app.models.ErrorResponse
 import com.example.delivery_app.ui.adapters.OrdersAdapter
@@ -78,7 +80,7 @@ class OrderListFragment: Fragment(), OrdersAdapter.IOnOrderClickListener {
     }
 
     override fun onOrderClicked(order: DeliveryOrder) {
-        //TODO("Not yet implemented")
+        activity?.addFragmentOnTopWithAnimationLeftToRight(OrderDetailsFragment(order), Constants.ORDER_DETAILS_SCREEN_TAG)
     }
 
 }
