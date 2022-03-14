@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">delivery-app</string>
+    <string name="content_description_floating_button">Refreshes the current list of orders</string>
 </resources>
