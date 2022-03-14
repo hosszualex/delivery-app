@@ -27,34 +27,47 @@
         android:backgroundTint="@color/emeraldGreen"
         android:onClick="@{() -> listener.onOrderClicked(item)}">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvCaption"
-                style="@style/NormalText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="2dp"
-                android:visibility="@{item.description == null ? View.GONE : View.VISIBLE}"
-                android:text="@{item.description}"
-                tools:text="This is a description"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivStatus"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/ic_new"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvPostedDate"
-                style="@style/NormalText"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="4dp"
-                android:text="@{Float.toString(item.price)}"
-                tools:text="120 Lei"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/ivStatus"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="8dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCaption"
+                    style="@style/NormalText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{item.description + ` to ` + item.deliverTo}"
+                    tools:text="This is a description" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPostedDate"
+                    style="@style/NormalText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{Float.toString(item.price) + ` €`}"
+                    tools:text="120 Lei" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 </layout>

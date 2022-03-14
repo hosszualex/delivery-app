@@ -51,9 +51,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="36dp"
                 android:backgroundTint="@color/emeraldGreen"
+                android:layout_marginTop="40dp"
                 app:cardCornerRadius="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="40dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cvImage">
 
@@ -68,22 +68,21 @@
                         style="@style/NormalText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{item.description}"
-                        android:visibility="@{item.description == null ? View.GONE : View.VISIBLE}"
+                        android:text="@{item.description + ` to ` + item.deliverTo}"
                         tools:text="Red Roses to Mihai" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/NormalText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{Float.toString(item.price)}"
+                        android:text="@{Float.toString(item.price) + ` €`}"
                         tools:text="50.68 €" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/NormalText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="Bulevardul Vasilve Parvanu, nr. 7, etaj 5, ap 89" />
+                        android:text="Bulevardul Vasilve Parvanu, nr. 7, etaj 5, ap 89" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -91,26 +90,35 @@
 
             <RadioGroup
                 android:id="@+id/rgStatus"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginHorizontal="36dp"
                 android:layout_marginTop="40dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
                 app:layout_constraintTop_toBottomOf="@id/cvDetails">
 
                 <RadioButton
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="New" />
 
                 <RadioButton
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="Pending" />
 
                 <RadioButton
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="Delivered" />
 
 
@@ -121,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginVertical="40dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

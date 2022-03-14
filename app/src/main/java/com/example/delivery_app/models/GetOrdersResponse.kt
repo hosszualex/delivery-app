@@ -8,3 +8,4 @@ data class GetOrdersResponse(
 )
 //TODO Add timestamp?
 //TODO Add Address
+//TODO Add Delivery Status
