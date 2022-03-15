@@ -37,7 +37,8 @@
                 android:layout_height="56dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
-                android:src="@drawable/ic_new"/>
+                android:tint="@color/black"
+                android:src="@{item.status == DeliveryStatusEnum.DELIVERED ? @drawable/ic_finished : item.status == DeliveryStatusEnum.PENDING ? @drawable/ic_pending : @drawable/ic_new}" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -64,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:text="@{Float.toString(item.price) + ` €`}"
-                    tools:text="120 Lei" />
+                    tools:text="120 €" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </RelativeLayout>
