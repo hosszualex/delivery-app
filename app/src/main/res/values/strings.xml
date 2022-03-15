@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">delivery-app</string>
+    <string name="app_name">Flower Delivery App</string>
     <string name="content_description_floating_button">Refreshes the current list of orders</string>
     <string name="save">Save</string>
     <string name="new_string">New</string>

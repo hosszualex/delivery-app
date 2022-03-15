@@ -35,10 +35,20 @@ class OrdersAdapter(private val clickListener: IOnOrderClickListener): RecyclerV
     fun updateItemStatus(orderId: Int, status: DeliveryStatusEnum) {
         this.items.forEachIndexed { index, deliveryOrder ->
             if (deliveryOrder.id == orderId) {
-                deliveryOrder.status = status
-                notifyItemChanged(index)
+                updateIfNewStatus(deliveryOrder, status, index)
                 return@forEachIndexed
             }
+        }
+    }
+
+    private fun updateIfNewStatus(
+        deliveryOrder: DeliveryOrder,
+        status: DeliveryStatusEnum,
+        index: Int
+    ) {
+        if (deliveryOrder.status != status) {
+            deliveryOrder.status = status
+            notifyItemChanged(index)
         }
     }
 

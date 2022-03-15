@@ -28,14 +28,13 @@ class OrderViewModel: ViewModel() {
         get() = _onDoneClicked
 
     private val deliveryOrdersRepository: IDeliveryOrderRepository = MockApiRepositoryImpl()
-
     private var statusToUpdate: DeliveryStatusEnum = DeliveryStatusEnum.NEW
 
     fun retrieveOrders() {
         _isBusy.value = true
         deliveryOrdersRepository.getDeliveryOrders(object: IDeliveryOrderRepository.IOnGetDeliveryOrders{
             override fun onSuccess(orders: List<DeliveryOrder>) {
-                _onGetOrders.value = orders
+                _onGetOrders.value = orders //The status is being overwritten on refresh with New, but everytime the status would update, I would see a post call to the API so it wouldnt
                 _isBusy.value = false
             }
 

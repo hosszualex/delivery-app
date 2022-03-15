@@ -28,6 +28,7 @@ class OrderDetailsFragment(private val order: DeliveryOrder): Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         binding.item = order
+        viewModel.setStatusToUpdate(order.status)
         binding.executePendingBindings()
         return binding.root
     }
