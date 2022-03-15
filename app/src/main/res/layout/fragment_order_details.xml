@@ -7,13 +7,15 @@
 
         <import type="android.view.View" />
 
+        <import type="com.example.delivery_app.enums.DeliveryStatusEnum" />
+
         <variable
             name="item"
             type="com.example.delivery_app.models.DeliveryOrder" />
 
         <variable
             name="viewModel"
-            type="com.example.delivery_app.viewModels.OrderDetailsViewModel" />
+            type="com.example.delivery_app.viewModels.OrderViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -105,6 +107,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    android:onClick="@{() -> viewModel.setStatusToUpdate(DeliveryStatusEnum.NEW)}"
+                    android:checked="@{item.status == DeliveryStatusEnum.NEW ? true : false}"
                     android:buttonTint="@color/radio_button_color_selector"
                     android:text="@string/new_string" />
 
@@ -112,6 +116,8 @@
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.setStatusToUpdate(DeliveryStatusEnum.PENDING)}"
+                    android:checked="@{item.status == DeliveryStatusEnum.PENDING ? true : false}"
                     android:textColor="@color/black"
                     android:buttonTint="@color/radio_button_color_selector"
                     android:text="@string/pending" />
@@ -121,6 +127,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    android:onClick="@{() -> viewModel.setStatusToUpdate(DeliveryStatusEnum.DELIVERED)}"
+                    android:checked="@{item.status == DeliveryStatusEnum.DELIVERED ? true : false}"
                     android:buttonTint="@color/radio_button_color_selector"
                     android:text="@string/delivered" />
 
@@ -139,6 +147,7 @@
                 android:textAllCaps="false"
                 android:backgroundTint="@color/emeraldGreen"
                 android:textColor="@color/black"
+                android:onClick="@{() -> viewModel.onDoneClicked(item.id)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

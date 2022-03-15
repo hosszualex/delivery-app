@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.delivery_app.viewModels.OrderListViewModel"/>
+            type="com.example.delivery_app.viewModels.OrderViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -6,21 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.delivery_app.Constants
 import com.example.delivery_app.databinding.FragmentOrderListBinding
+import com.example.delivery_app.enums.DeliveryStatusEnum
 import com.example.delivery_app.extensions.addFragmentOnTopWithAnimationLeftToRight
 import com.example.delivery_app.models.DeliveryOrder
 import com.example.delivery_app.models.ErrorResponse
+import com.example.delivery_app.ui.activities.MainActivity
 import com.example.delivery_app.ui.adapters.OrdersAdapter
 import com.example.delivery_app.ui.dialogs.LoadingDialog
-import com.example.delivery_app.viewModels.OrderListViewModel
+import com.example.delivery_app.viewModels.OrderViewModel
 
 class OrderListFragment: Fragment(), OrdersAdapter.IOnOrderClickListener {
 
     private lateinit var binding: FragmentOrderListBinding
-    private lateinit var viewModel: OrderListViewModel
+    private val viewModel: OrderViewModel by activityViewModels()
     private lateinit var adapter: OrdersAdapter
     private lateinit var loadingDialog: LoadingDialog
 
@@ -36,6 +38,11 @@ class OrderListFragment: Fragment(), OrdersAdapter.IOnOrderClickListener {
         binding.rvPosts.adapter = adapter
     }
 
+    private val onUpdateItem = Observer<Pair<Int, DeliveryStatusEnum>> { pair ->
+        adapter.updateItemStatus(pair.first, pair.second)
+        (activity as MainActivity).onBackPressed()
+    }
+
     private val isBusy = Observer<Boolean> { isBusy ->
         if (isBusy) {
             loadingDialog.startDialog()
@@ -46,11 +53,6 @@ class OrderListFragment: Fragment(), OrdersAdapter.IOnOrderClickListener {
 
     private val onError = Observer<ErrorResponse> { onError ->
         Toast.makeText(requireContext(), "Error Message: " + onError.errorMessage + "\nError Code: " + onError.errorCode, Toast.LENGTH_LONG).show()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(OrderListViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -77,6 +79,7 @@ class OrderListFragment: Fragment(), OrdersAdapter.IOnOrderClickListener {
         viewModel.isBusy.observe(viewLifecycleOwner, isBusy)
         viewModel.onGetOrders.observe(viewLifecycleOwner, onGetOrders)
         viewModel.onError.observe(viewLifecycleOwner, onError)
+        viewModel.onDoneClicked.observe(viewLifecycleOwner, onUpdateItem)
     }
 
     override fun onOrderClicked(order: DeliveryOrder) {

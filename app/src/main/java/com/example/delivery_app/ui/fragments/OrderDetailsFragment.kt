@@ -5,30 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.example.delivery_app.databinding.FragmentOrderDetailsBinding
 import com.example.delivery_app.models.DeliveryOrder
-import com.example.delivery_app.viewModels.OrderDetailsViewModel
+import com.example.delivery_app.viewModels.OrderViewModel
 
 class OrderDetailsFragment(private val order: DeliveryOrder): Fragment() {
 
     private lateinit var binding: FragmentOrderDetailsBinding
-    private lateinit var viewModel: OrderDetailsViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(OrderDetailsViewModel::class.java)
-    }
+    private val viewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val rootView = initializeScreen(inflater)
-        connectViewModel()
-        viewModel.retrieveOrders()
-        return rootView
+        return initializeScreen(inflater)
     }
 
     private fun initializeScreen(inflater: LayoutInflater): View {
@@ -38,11 +30,5 @@ class OrderDetailsFragment(private val order: DeliveryOrder): Fragment() {
         binding.item = order
         binding.executePendingBindings()
         return binding.root
-    }
-
-    private fun connectViewModel() {
-//        viewModel.isBusy.observe(viewLifecycleOwner, isBusy)
-//        viewModel.onGetOrders.observe(viewLifecycleOwner, onGetOrders)
-//        viewModel.onError.observe(viewLifecycleOwner, onError)
     }
 }

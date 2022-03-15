@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.delivery_app.databinding.DeliveryOrderItemBinding
+import com.example.delivery_app.enums.DeliveryStatusEnum
 import com.example.delivery_app.models.DeliveryOrder
 import com.example.delivery_app.utils.OrdersDiffUtil
 
@@ -29,6 +30,16 @@ class OrdersAdapter(private val clickListener: IOnOrderClickListener): RecyclerV
         val diffResults = DiffUtil.calculateDiff(diffUtil)
         this.items = newItems
         diffResults.dispatchUpdatesTo(this)
+    }
+
+    fun updateItemStatus(orderId: Int, status: DeliveryStatusEnum) {
+        this.items.forEachIndexed { index, deliveryOrder ->
+            if (deliveryOrder.id == orderId) {
+                deliveryOrder.status = status
+                notifyItemChanged(index)
+                return@forEachIndexed
+            }
+        }
     }
 
     inner class ViewHolder(private val binding: DeliveryOrderItemBinding) : RecyclerView.ViewHolder(binding.root) {

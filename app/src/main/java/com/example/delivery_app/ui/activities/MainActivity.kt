@@ -13,13 +13,10 @@ import com.example.delivery_app.ui.fragments.OrderListFragment
 class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding : ActivityMainBinding = DataBindingUtil.setContentView(this,
-            R.layout.activity_main
-        )
+        val binding : ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         this.addFragmentOnTop(OrderListFragment(), Constants.ORDER_LIST_SCREEN_TAG)
     }
-
 
     override fun onBackPressed() {
         val lastFragment = this.lastFragment()
