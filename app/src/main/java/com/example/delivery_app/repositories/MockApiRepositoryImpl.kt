@@ -7,14 +7,14 @@ import com.example.delivery_app.services.IMockApiRetrofitService
 import com.example.delivery_app.services.MockApiRetrofitService
 
 class MockApiRepositoryImpl : IDeliveryOrderRepository {
-    private val apiService: IMockApiRetrofitService
+    private val retrofitService: IMockApiRetrofitService
 
     init {
-        apiService = MockApiRetrofitService
+        retrofitService = MockApiRetrofitService
     }
 
     override fun getDeliveryOrders(listener: IDeliveryOrderRepository.IOnGetDeliveryOrders) {
-        apiService.getOrders(object : IMockApiRetrofitService.IOnGetOrders {
+        retrofitService.getOrders(object : IMockApiRetrofitService.IOnGetOrders {
             override fun onSuccess(data: ArrayList<GetOrdersResponse>) {
                 val deliveryOrders = getDeliveryOrdersFromResponse(data)
                 listener.onSuccess(deliveryOrders)
