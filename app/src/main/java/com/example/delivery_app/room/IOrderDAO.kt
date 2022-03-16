@@ -9,10 +9,10 @@ import com.example.delivery_app.models.RoomDeliveryOrder
 @Dao
 interface IOrderDAO {
     @Query("SELECT * FROM order_table ORDER BY price DESC")
-    fun getOrdersByPrice(): List<RoomDeliveryOrder>
+    suspend fun getOrdersByPrice(): List<RoomDeliveryOrder>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(order: RoomDeliveryOrder)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(order: List<RoomDeliveryOrder>)
 
     @Query("DELETE FROM order_table")
     suspend fun deleteAll()

@@ -13,5 +13,5 @@ data class RoomDeliveryOrder(
     @ColumnInfo(name = "deliverTo") val deliverTo: String,
     @ColumnInfo(name = "deliveryAddress") val deliveryAddress: String,
     @ColumnInfo(name = "urlImage") val urlImage: String,
-    @ColumnInfo(name = "status") var status: DeliveryStatusEnum = DeliveryStatusEnum.NEW
+    @ColumnInfo(name = "status") var status: String
 )

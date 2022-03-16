@@ -1,9 +1,7 @@
 package com.example.delivery_app.viewModels
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.delivery_app.enums.DeliveryStatusEnum
 import com.example.delivery_app.models.DeliveryOrder
 import com.example.delivery_app.models.ErrorResponse
@@ -11,10 +9,9 @@ import com.example.delivery_app.repositories.IDeliveryOrderRepository
 import com.example.delivery_app.repositories.MockApiRepositoryImpl
 import com.example.delivery_app.room.OrderRoomDatabase
 import com.example.delivery_app.room.RoomOrderRepositoryImpl
+import kotlinx.coroutines.launch
 
-import androidx.lifecycle.ViewModelProvider
-
-class OrderViewModel(applicationContext: Context): ViewModel() {
+class OrderViewModel(applicationContext: Context) : ViewModel() {
 
     private var statusToUpdate: DeliveryStatusEnum = DeliveryStatusEnum.NEW
 
@@ -35,29 +32,46 @@ class OrderViewModel(applicationContext: Context): ViewModel() {
         get() = _onDoneClicked
 
     private val apiRepository: IDeliveryOrderRepository = MockApiRepositoryImpl()
-    private val roomRepository: IDeliveryOrderRepository = RoomOrderRepositoryImpl(OrderRoomDatabase.getDatabase(applicationContext).orderDao())
+    private val roomRepository: IDeliveryOrderRepository =
+        RoomOrderRepositoryImpl(OrderRoomDatabase.getDatabase(applicationContext).orderDao())
 
     private val repository: IDeliveryOrderRepository
-        get() = if (true) {
+        get() = if (isNetworkAvailable) {
             apiRepository
         } else {
             roomRepository
         }
 
+    //TODO make this work
+    private val isNetworkAvailable = false
+
     fun retrieveOrders() {
         _isBusy.value = true
-        repository.getDeliveryOrders(object: IDeliveryOrderRepository.IOnGetDeliveryOrders{
-            override fun onSuccess(orders: List<DeliveryOrder>) {
-                _onGetOrders.value = orders //The status is being overwritten on refresh with New, but everytime the status would update, I would see a post call to the API so it wouldnt
-                _isBusy.value = false
-            }
+        viewModelScope.launch {
+            repository.getDeliveryOrders(object : IDeliveryOrderRepository.IOnGetDeliveryOrders {
+                override fun onSuccess(orders: List<DeliveryOrder>) {
+                    _onGetOrders.value = orders
+                    _isBusy.value = false
+                    if (isNetworkAvailable) {
+                        updateData(orders)
+                    }
+                }
 
-            override fun onFailed(error: ErrorResponse) {
-                _onError.value = error
-                _isBusy.value = false
-            }
-        })
+                override fun onFailed(error: ErrorResponse) {
+                    _onError.value = error
+                    _isBusy.value = false
+                }
+            })
+        }
     }
+
+    private fun updateData(orders: List<DeliveryOrder>) =
+        viewModelScope.launch {
+            roomRepository.updateDeliveryOrders(orders, object: IDeliveryOrderRepository.IOnUpdateDeliveryOrders{
+                override fun onSuccess() {}
+                override fun onFailed(error: ErrorResponse) { _onError.value = error }
+            })
+        }
 
     fun onRefreshClicked() {
         retrieveOrders()

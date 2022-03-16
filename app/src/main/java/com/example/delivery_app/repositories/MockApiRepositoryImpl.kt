@@ -14,7 +14,7 @@ class MockApiRepositoryImpl : IDeliveryOrderRepository {
         retrofitService = MockApiRetrofitService
     }
 
-    override fun getDeliveryOrders(listener: IDeliveryOrderRepository.IOnGetDeliveryOrders) {
+    override suspend fun getDeliveryOrders(listener: IDeliveryOrderRepository.IOnGetDeliveryOrders) {
         retrofitService.getOrders(object : IMockApiRetrofitService.IOnGetOrders {
             override fun onSuccess(data: ArrayList<GetOrdersResponse>) {
                 val deliveryOrders = getDeliveryOrdersFromResponse(data)
@@ -25,6 +25,13 @@ class MockApiRepositoryImpl : IDeliveryOrderRepository {
                 listener.onFailed(error)
             }
         })
+    }
+
+    override suspend fun updateDeliveryOrders(
+        orders: List<DeliveryOrder>,
+        listener: IDeliveryOrderRepository.IOnUpdateDeliveryOrders
+    ) {
+        //We would call a post API to update the status of the order
     }
 
     private fun getDeliveryOrdersFromResponse(data: ArrayList<GetOrdersResponse>): List<DeliveryOrder> {

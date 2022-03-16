@@ -5,10 +5,17 @@ import com.example.delivery_app.models.ErrorResponse
 
 interface IDeliveryOrderRepository {
 
-    fun getDeliveryOrders(listener: IOnGetDeliveryOrders)
+    suspend fun getDeliveryOrders(listener: IOnGetDeliveryOrders)
+
+    suspend fun updateDeliveryOrders(orders: List<DeliveryOrder>, listener: IOnUpdateDeliveryOrders)
 
     interface IOnGetDeliveryOrders{
         fun onSuccess(orders: List<DeliveryOrder>)
+        fun onFailed(error: ErrorResponse)
+    }
+
+    interface IOnUpdateDeliveryOrders{
+        fun onSuccess()
         fun onFailed(error: ErrorResponse)
     }
 }
