@@ -8,9 +8,12 @@ import com.example.delivery_app.R
 import com.example.delivery_app.databinding.ActivityMainBinding
 import com.example.delivery_app.extensions.addFragmentOnTop
 import com.example.delivery_app.extensions.lastFragment
+import com.example.delivery_app.room.OrderRoomDatabase
+import com.example.delivery_app.room.RoomOrderRepositoryImpl
 import com.example.delivery_app.ui.fragments.OrderListFragment
 
 class MainActivity : FragmentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding : ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)

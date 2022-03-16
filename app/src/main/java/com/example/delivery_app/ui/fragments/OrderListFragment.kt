@@ -18,11 +18,12 @@ import com.example.delivery_app.ui.activities.MainActivity
 import com.example.delivery_app.ui.adapters.OrdersAdapter
 import com.example.delivery_app.ui.dialogs.LoadingDialog
 import com.example.delivery_app.viewModels.OrderViewModel
+import com.example.delivery_app.viewModels.OrderViewModelFactory
 
 class OrderListFragment: Fragment(), OrdersAdapter.IOnOrderClickListener {
 
     private lateinit var binding: FragmentOrderListBinding
-    private val viewModel: OrderViewModel by activityViewModels()
+    private val viewModel: OrderViewModel by activityViewModels { OrderViewModelFactory(requireActivity().applicationContext) }
     private lateinit var adapter: OrdersAdapter
     private lateinit var loadingDialog: LoadingDialog
 

@@ -9,11 +9,12 @@ import androidx.fragment.app.activityViewModels
 import com.example.delivery_app.databinding.FragmentOrderDetailsBinding
 import com.example.delivery_app.models.DeliveryOrder
 import com.example.delivery_app.viewModels.OrderViewModel
+import com.example.delivery_app.viewModels.OrderViewModelFactory
 
 class OrderDetailsFragment(private val order: DeliveryOrder): Fragment() {
 
     private lateinit var binding: FragmentOrderDetailsBinding
-    private val viewModel: OrderViewModel by activityViewModels()
+    private val viewModel: OrderViewModel by activityViewModels { OrderViewModelFactory(requireActivity().applicationContext) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
