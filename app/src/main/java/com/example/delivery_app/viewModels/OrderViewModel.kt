@@ -14,8 +14,6 @@ import kotlinx.coroutines.launch
 
 class OrderViewModel(applicationContext: Context) : ViewModel() {
 
-    private var statusToUpdate: DeliveryStatusEnum = DeliveryStatusEnum.NEW
-
     private val _isBusy = MutableLiveData<Boolean>()
     val isBusy: LiveData<Boolean>
         get() = _isBusy
@@ -38,6 +36,7 @@ class OrderViewModel(applicationContext: Context) : ViewModel() {
 
     private val isNetworkAvailable
         get() = NetworkUtils.isNetworkConnected
+
     private val repository: IDeliveryOrderRepository
         get() = if (isNetworkAvailable) {
             apiRepository
@@ -45,6 +44,7 @@ class OrderViewModel(applicationContext: Context) : ViewModel() {
             roomRepository
         }
 
+    private var statusToUpdate: DeliveryStatusEnum = DeliveryStatusEnum.NEW
 
     fun retrieveOrders() {
         _isBusy.value = true
