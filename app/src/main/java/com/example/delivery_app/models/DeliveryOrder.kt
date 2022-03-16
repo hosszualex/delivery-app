@@ -7,5 +7,7 @@ data class DeliveryOrder(
     val description: String,
     val price: Float,
     val deliverTo: String,
+    val deliveryAddress: String,
+    val urlImage: String,
     var status: DeliveryStatusEnum = DeliveryStatusEnum.NEW
 )

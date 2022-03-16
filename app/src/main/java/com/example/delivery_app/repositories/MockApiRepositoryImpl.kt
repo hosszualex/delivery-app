@@ -1,5 +1,6 @@
 package com.example.delivery_app.repositories
 
+import com.example.delivery_app.enums.toDeliveryStatusEnum
 import com.example.delivery_app.models.DeliveryOrder
 import com.example.delivery_app.models.ErrorResponse
 import com.example.delivery_app.models.GetOrdersResponse
@@ -30,7 +31,7 @@ class MockApiRepositoryImpl : IDeliveryOrderRepository {
         val deliveryOrders = mutableListOf<DeliveryOrder>()
         data.forEach { order ->
             deliveryOrders.add(
-                DeliveryOrder(order.id, order.description, order.price, order.deliver_to)
+                DeliveryOrder(order.id, order.description, order.price, order.deliver_to, order.delivery_address, order.url_image, order.order_status.toDeliveryStatusEnum())
             )
         }
         deliveryOrders.sortByDescending { it.price }

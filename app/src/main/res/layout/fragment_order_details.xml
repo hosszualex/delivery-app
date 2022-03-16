@@ -44,7 +44,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/flower" />
+                    android:srcUrl="@{item.urlImage}"
+                    tools:src="@drawable/placeholder_flower"
+                    />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -84,7 +86,8 @@
                         style="@style/NormalText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bulevardul Vasilve Parvanu, nr. 7, etaj 5, ap 89" />
+                        android:text="@{item.deliveryAddress}"
+                        tools:text="Strada Cuza Voda 7"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -5,3 +5,20 @@ enum class DeliveryStatusEnum {
     PENDING,
     DELIVERED
 }
+
+fun String.toDeliveryStatusEnum(): DeliveryStatusEnum {
+    return when (this) {
+        "NEW" -> {
+            DeliveryStatusEnum.NEW
+        }
+        "PENDING" -> {
+            DeliveryStatusEnum.PENDING
+        }
+        "DELIVERED" -> {
+            DeliveryStatusEnum.DELIVERED
+        }
+        else -> {
+            DeliveryStatusEnum.NEW
+        }
+    }
+}
