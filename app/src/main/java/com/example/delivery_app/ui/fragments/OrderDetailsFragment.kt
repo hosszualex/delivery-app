@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.delivery_app.databinding.FragmentOrderDetailsBinding
 import com.example.delivery_app.models.DeliveryOrder
 import com.example.delivery_app.viewModels.OrderViewModel
-import com.example.delivery_app.viewModels.OrderViewModelFactory
+import com.example.delivery_app.viewModels.factories.OrderViewModelFactory
 
 class OrderDetailsFragment(private val order: DeliveryOrder): Fragment() {
 

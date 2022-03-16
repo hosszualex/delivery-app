@@ -1,4 +1,4 @@
-package com.example.delivery_app.room
+package com.example.delivery_app.services.room
 
 import androidx.room.Dao
 import androidx.room.Insert

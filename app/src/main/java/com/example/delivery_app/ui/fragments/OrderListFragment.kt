@@ -18,7 +18,7 @@ import com.example.delivery_app.ui.activities.MainActivity
 import com.example.delivery_app.ui.adapters.OrdersAdapter
 import com.example.delivery_app.ui.dialogs.LoadingDialog
 import com.example.delivery_app.viewModels.OrderViewModel
-import com.example.delivery_app.viewModels.OrderViewModelFactory
+import com.example.delivery_app.viewModels.factories.OrderViewModelFactory
 
 class OrderListFragment: Fragment(), OrdersAdapter.IOnOrderClickListener {
 

@@ -4,8 +4,8 @@ import com.example.delivery_app.enums.toDeliveryStatusEnum
 import com.example.delivery_app.models.DeliveryOrder
 import com.example.delivery_app.models.ErrorResponse
 import com.example.delivery_app.models.GetOrdersResponse
-import com.example.delivery_app.services.IMockApiRetrofitService
-import com.example.delivery_app.services.MockApiRetrofitService
+import com.example.delivery_app.services.retrofit.IMockApiRetrofitService
+import com.example.delivery_app.services.retrofit.MockApiRetrofitService
 
 class MockApiRepositoryImpl : IDeliveryOrderRepository {
     private val retrofitService: IMockApiRetrofitService

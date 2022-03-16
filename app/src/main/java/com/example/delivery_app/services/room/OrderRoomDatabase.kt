@@ -1,13 +1,10 @@
-package com.example.delivery_app.room
+package com.example.delivery_app.services.room
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.delivery_app.models.RoomDeliveryOrder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @Database(entities = arrayOf(RoomDeliveryOrder::class), version = 1, exportSchema = false)
 abstract class OrderRoomDatabase: RoomDatabase() {

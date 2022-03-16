@@ -5,10 +5,11 @@ import androidx.lifecycle.*
 import com.example.delivery_app.enums.DeliveryStatusEnum
 import com.example.delivery_app.models.DeliveryOrder
 import com.example.delivery_app.models.ErrorResponse
+import com.example.delivery_app.utils.NetworkUtils
 import com.example.delivery_app.repositories.IDeliveryOrderRepository
 import com.example.delivery_app.repositories.MockApiRepositoryImpl
-import com.example.delivery_app.room.OrderRoomDatabase
-import com.example.delivery_app.room.RoomOrderRepositoryImpl
+import com.example.delivery_app.services.room.OrderRoomDatabase
+import com.example.delivery_app.repositories.RoomOrderRepositoryImpl
 import kotlinx.coroutines.launch
 
 class OrderViewModel(applicationContext: Context) : ViewModel() {
@@ -35,6 +36,8 @@ class OrderViewModel(applicationContext: Context) : ViewModel() {
     private val roomRepository: IDeliveryOrderRepository =
         RoomOrderRepositoryImpl(OrderRoomDatabase.getDatabase(applicationContext).orderDao())
 
+    private val isNetworkAvailable
+        get() = NetworkUtils.isNetworkConnected
     private val repository: IDeliveryOrderRepository
         get() = if (isNetworkAvailable) {
             apiRepository
@@ -42,8 +45,6 @@ class OrderViewModel(applicationContext: Context) : ViewModel() {
             roomRepository
         }
 
-    //TODO make this work
-    private val isNetworkAvailable = false
 
     fun retrieveOrders() {
         _isBusy.value = true
@@ -83,12 +84,5 @@ class OrderViewModel(applicationContext: Context) : ViewModel() {
 
     fun onDoneClicked(orderId: Int) {
         _onDoneClicked.value = Pair(orderId, statusToUpdate)
-    }
-}
-
-class OrderViewModelFactory(private val mApplication: Context) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return OrderViewModel(mApplication) as T
     }
 }

@@ -1,10 +1,10 @@
-package com.example.delivery_app.room
+package com.example.delivery_app.repositories
 
 import androidx.annotation.WorkerThread
 import com.example.delivery_app.enums.toDeliveryStatusEnum
 import com.example.delivery_app.models.DeliveryOrder
 import com.example.delivery_app.models.RoomDeliveryOrder
-import com.example.delivery_app.repositories.IDeliveryOrderRepository
+import com.example.delivery_app.services.room.IOrderDAO
 
 class RoomOrderRepositoryImpl(private val orderDao: IOrderDAO): IDeliveryOrderRepository {
 
