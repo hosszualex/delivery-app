@@ -86,7 +86,7 @@ class OrderListFragment: Fragment(), OrdersAdapter.IOnOrderClickListener {
 
     override fun onOrderClicked(order: DeliveryOrder) {
         val jsonString = Gson().toJson(order)
-        activity?.addFragmentOnTopWithAnimationLeftToRight(OrderDetailsFragment().newInstance(""), Constants.ORDER_DETAILS_SCREEN_TAG)
+        activity?.addFragmentOnTopWithAnimationLeftToRight(OrderDetailsFragment().newInstance(jsonString), Constants.ORDER_DETAILS_SCREEN_TAG)
     }
 
 }
