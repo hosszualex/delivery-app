@@ -3,7 +3,6 @@ package com.example.delivery_app.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.delivery_app.enums.DeliveryStatusEnum
 import com.example.delivery_app.enums.toDeliveryStatusEnum
 
 @Entity(tableName = "order_table")
