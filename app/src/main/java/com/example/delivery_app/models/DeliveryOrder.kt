@@ -3,12 +3,12 @@ package com.example.delivery_app.models
 import com.example.delivery_app.enums.DeliveryStatusEnum
 
 data class DeliveryOrder(
-    val id: Int,
-    val description: String,
-    val price: Float,
-    val deliverTo: String,
-    val deliveryAddress: String,
-    val urlImage: String,
+    val id: Int = 0,
+    val description: String = "",
+    val price: Float = 0f,
+    val deliverTo: String = "",
+    val deliveryAddress: String = "",
+    val urlImage: String = "",
     var status: DeliveryStatusEnum = DeliveryStatusEnum.NEW
 )
 

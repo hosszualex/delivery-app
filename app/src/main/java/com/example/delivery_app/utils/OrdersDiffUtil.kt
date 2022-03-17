@@ -34,6 +34,12 @@ class OrdersDiffUtil
             oldList[oldItemPosition].price != newList[newItemPosition].price -> {
                 false
             }
+            oldList[oldItemPosition].deliveryAddress != newList[newItemPosition].deliveryAddress -> {
+                false
+            }
+            oldList[oldItemPosition].urlImage != newList[newItemPosition].urlImage -> {
+                false
+            }
             else -> {
                 true
             }

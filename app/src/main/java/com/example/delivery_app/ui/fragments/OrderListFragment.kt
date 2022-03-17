@@ -19,6 +19,7 @@ import com.example.delivery_app.ui.adapters.OrdersAdapter
 import com.example.delivery_app.ui.dialogs.LoadingDialog
 import com.example.delivery_app.viewModels.OrderViewModel
 import com.example.delivery_app.viewModels.factories.OrderViewModelFactory
+import com.google.gson.Gson
 
 class OrderListFragment: Fragment(), OrdersAdapter.IOnOrderClickListener {
 
@@ -84,7 +85,8 @@ class OrderListFragment: Fragment(), OrdersAdapter.IOnOrderClickListener {
     }
 
     override fun onOrderClicked(order: DeliveryOrder) {
-        activity?.addFragmentOnTopWithAnimationLeftToRight(OrderDetailsFragment(order), Constants.ORDER_DETAILS_SCREEN_TAG)
+        val jsonString = Gson().toJson(order)
+        activity?.addFragmentOnTopWithAnimationLeftToRight(OrderDetailsFragment().newInstance(""), Constants.ORDER_DETAILS_SCREEN_TAG)
     }
 
 }

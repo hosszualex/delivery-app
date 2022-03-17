@@ -7,6 +7,10 @@ import com.squareup.picasso.Picasso
 
 @BindingAdapter("android:srcUrl")
 fun ImageView.setImageResourceFromUrl(url: String) {
-    Picasso.get().load(url).placeholder(R.drawable.placeholder_flower).fit().into(this)
+    if (url.isEmpty()) {
+        Picasso.get().load(R.drawable.placeholder_flower).placeholder(R.drawable.placeholder_flower).fit().into(this)
+    } else {
+        Picasso.get().load(url).placeholder(R.drawable.placeholder_flower).fit().into(this)
+    }
 }
 
