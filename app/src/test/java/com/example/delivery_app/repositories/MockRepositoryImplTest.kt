@@ -26,7 +26,7 @@ import kotlin.reflect.typeOf
 @RunWith(AndroidJUnit4::class)
 @Config(manifest=Config.NONE)
 @LooperMode(LooperMode.Mode.PAUSED)
-class MockRepositoryTestImpl {
+class MockRepositoryImplTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
