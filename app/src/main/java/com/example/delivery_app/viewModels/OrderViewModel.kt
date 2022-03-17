@@ -26,8 +26,8 @@ class OrderViewModel(applicationContext: Context) : ViewModel() {
     val onGetOrders: LiveData<List<DeliveryOrder>>
         get() = _onGetOrders
 
-    private val _onDoneClicked = MutableLiveData<Pair<Int, DeliveryStatusEnum>>()
-    val onDoneClicked: LiveData<Pair<Int, DeliveryStatusEnum>>
+    private val _onDoneClicked = MutableLiveData<DeliveryOrder>()
+    val onDoneClicked: LiveData<DeliveryOrder>
         get() = _onDoneClicked
 
     private val apiRepository: IDeliveryOrderRepository = MockApiRepositoryImpl()
@@ -47,6 +47,9 @@ class OrderViewModel(applicationContext: Context) : ViewModel() {
     private var statusToUpdate: DeliveryStatusEnum = DeliveryStatusEnum.NEW
 
     fun retrieveOrders() {
+        if (_isBusy.value != null && _isBusy.value == true) {
+            return
+        }
         _isBusy.value = true
         viewModelScope.launch {
             repository.getDeliveryOrders(object : IDeliveryOrderRepository.IOnGetDeliveryOrders {
@@ -54,7 +57,7 @@ class OrderViewModel(applicationContext: Context) : ViewModel() {
                     _onGetOrders.value = orders
                     _isBusy.value = false
                     if (isNetworkAvailable) {
-                        updateData(orders)
+                        updateAllData(orders)
                     }
                 }
 
@@ -63,12 +66,22 @@ class OrderViewModel(applicationContext: Context) : ViewModel() {
                     _isBusy.value = false
                 }
             })
+
         }
     }
 
-    private fun updateData(orders: List<DeliveryOrder>) =
+    private fun updateData(order: DeliveryOrder) {
         viewModelScope.launch {
-            roomRepository.updateDeliveryOrders(orders, object: IDeliveryOrderRepository.IOnUpdateDeliveryOrders{
+            roomRepository.updateDeliveryOrder(order, object: IDeliveryOrderRepository.IOnUpdateDeliveryOrder{
+                override fun onSuccess() {}
+                override fun onFailed(error: ErrorResponse) { _onError.value = error }
+            })
+        }
+    }
+
+    private fun updateAllData(orders: List<DeliveryOrder>) =
+        viewModelScope.launch {
+            roomRepository.updateAllDeliveryOrders(orders, object: IDeliveryOrderRepository.IOnUpdateDeliveryOrder{
                 override fun onSuccess() {}
                 override fun onFailed(error: ErrorResponse) { _onError.value = error }
             })
@@ -82,7 +95,9 @@ class OrderViewModel(applicationContext: Context) : ViewModel() {
         statusToUpdate = status
     }
 
-    fun onDoneClicked(orderId: Int) {
-        _onDoneClicked.value = Pair(orderId, statusToUpdate)
+    fun onDoneClicked(order: DeliveryOrder) {
+        order.status = statusToUpdate
+        updateData(order)
+        _onDoneClicked.value = order
     }
 }

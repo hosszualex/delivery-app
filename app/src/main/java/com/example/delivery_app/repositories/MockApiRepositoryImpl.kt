@@ -27,11 +27,18 @@ class MockApiRepositoryImpl : IDeliveryOrderRepository {
         })
     }
 
-    override suspend fun updateDeliveryOrders(
+    override suspend fun updateAllDeliveryOrders(
         orders: List<DeliveryOrder>,
-        listener: IDeliveryOrderRepository.IOnUpdateDeliveryOrders
+        listener: IDeliveryOrderRepository.IOnUpdateDeliveryOrder
     ) {
-        //We would call a post API to update the status of the order
+        //We would call a post API to update the dataset
+    }
+
+    override suspend fun updateDeliveryOrder(
+        order: DeliveryOrder,
+        listener: IDeliveryOrderRepository.IOnUpdateDeliveryOrder
+    ) {
+        //We would call a post API to update the data
     }
 
     private fun getDeliveryOrdersFromResponse(data: ArrayList<GetOrdersResponse>): List<DeliveryOrder> {

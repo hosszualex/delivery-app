@@ -7,14 +7,16 @@ interface IDeliveryOrderRepository {
 
     suspend fun getDeliveryOrders(listener: IOnGetDeliveryOrders)
 
-    suspend fun updateDeliveryOrders(orders: List<DeliveryOrder>, listener: IOnUpdateDeliveryOrders)
+    suspend fun updateAllDeliveryOrders(orders: List<DeliveryOrder>, listener: IOnUpdateDeliveryOrder)
+
+    suspend fun updateDeliveryOrder(order: DeliveryOrder, listener: IOnUpdateDeliveryOrder)
 
     interface IOnGetDeliveryOrders{
         fun onSuccess(orders: List<DeliveryOrder>)
         fun onFailed(error: ErrorResponse)
     }
 
-    interface IOnUpdateDeliveryOrders{
+    interface IOnUpdateDeliveryOrder{
         fun onSuccess()
         fun onFailed(error: ErrorResponse)
     }

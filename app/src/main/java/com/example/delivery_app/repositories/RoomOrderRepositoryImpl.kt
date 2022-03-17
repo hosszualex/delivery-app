@@ -1,9 +1,10 @@
 package com.example.delivery_app.repositories
 
 import androidx.annotation.WorkerThread
-import com.example.delivery_app.enums.toDeliveryStatusEnum
 import com.example.delivery_app.models.DeliveryOrder
 import com.example.delivery_app.models.RoomDeliveryOrder
+import com.example.delivery_app.models.toDeliveryOrder
+import com.example.delivery_app.models.toRoomDeliveryOrder
 import com.example.delivery_app.services.room.IOrderDAO
 
 class RoomOrderRepositoryImpl(private val orderDao: IOrderDAO): IDeliveryOrderRepository {
@@ -14,20 +15,27 @@ class RoomOrderRepositoryImpl(private val orderDao: IOrderDAO): IDeliveryOrderRe
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    override suspend fun updateDeliveryOrders(
+    override suspend fun updateAllDeliveryOrders(
         orders: List<DeliveryOrder>,
-        listener: IDeliveryOrderRepository.IOnUpdateDeliveryOrders
+        listener: IDeliveryOrderRepository.IOnUpdateDeliveryOrder
     ) {
-        orderDao.insert(getRoomDeliveryOrdersFromDeliveryOrders(orders))
+        orderDao.deleteAll()
+        orderDao.insertAll(getRoomDeliveryOrdersFromDeliveryOrders(orders))
+        listener.onSuccess()
+    }
+
+    override suspend fun updateDeliveryOrder(
+        order: DeliveryOrder,
+        listener: IDeliveryOrderRepository.IOnUpdateDeliveryOrder
+    ) {
+        orderDao.insert(order.toRoomDeliveryOrder())
         listener.onSuccess()
     }
 
     private fun getRoomDeliveryOrdersFromDeliveryOrders(data: List<DeliveryOrder>) : List<RoomDeliveryOrder> {
         val deliveryOrders = mutableListOf<RoomDeliveryOrder>()
         data.forEach { order ->
-            deliveryOrders.add(
-                RoomDeliveryOrder(order.id, order.description, order.price, order.deliverTo, order.deliveryAddress, order.urlImage, order.status.name)
-            )
+            deliveryOrders.add(order.toRoomDeliveryOrder())
         }
         return deliveryOrders.toList()
     }
@@ -35,9 +43,7 @@ class RoomOrderRepositoryImpl(private val orderDao: IOrderDAO): IDeliveryOrderRe
     private fun getDeliveryOrdersFromRoomDeliveryOrders(data: List<RoomDeliveryOrder>) : List<DeliveryOrder> {
         val deliveryOrders = mutableListOf<DeliveryOrder>()
         data.forEach { order ->
-            deliveryOrders.add(
-                DeliveryOrder(order.id, order.description, order.price, order.deliverTo, order.deliveryAddress, order.urlImage, order.status.toDeliveryStatusEnum())
-            )
+            deliveryOrders.add(order.toDeliveryOrder())
         }
         deliveryOrders.sortByDescending { it.price }
         return deliveryOrders.toList()

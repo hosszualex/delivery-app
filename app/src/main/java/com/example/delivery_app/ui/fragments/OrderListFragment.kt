@@ -39,8 +39,8 @@ class OrderListFragment: Fragment(), OrdersAdapter.IOnOrderClickListener {
         binding.rvPosts.adapter = adapter
     }
 
-    private val onUpdateItem = Observer<Pair<Int, DeliveryStatusEnum>> { pair ->
-        adapter.updateItemStatus(pair.first, pair.second)
+    private val onUpdateItem = Observer<DeliveryOrder> { deliveryOrder ->
+        adapter.updateItemStatus(deliveryOrder.id, deliveryOrder.status)
         (activity as MainActivity).onBackPressed()
     }
 
