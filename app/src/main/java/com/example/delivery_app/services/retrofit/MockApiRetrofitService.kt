@@ -1,4 +1,4 @@
-package com.example.delivery_app.services
+package com.example.delivery_app.services.retrofit
 
 import com.example.delivery_app.BuildConfig
 import com.example.delivery_app.Constants

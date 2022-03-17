@@ -2,7 +2,6 @@ package com.example.delivery_app.services
 
 import com.example.delivery_app.models.ErrorResponse
 import com.example.delivery_app.models.GetOrdersResponse
-import com.example.delivery_app.services.retrofit.IMockApiRetrofitService
 
 object MockApiFakeRetrofitService: IMockApiRetrofitService {
 

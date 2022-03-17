@@ -8,6 +8,8 @@ import com.example.delivery_app.models.DeliveryOrder
 import com.example.delivery_app.models.ErrorResponse
 import com.example.delivery_app.models.GetOrdersResponse
 import com.example.delivery_app.services.MockApiFakeRetrofitService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -67,13 +69,15 @@ class MockRepositoryTestImpl {
         MockApiFakeRetrofitService.mockData = FakeConstants.mockResponse
         MockApiFakeRetrofitService.responseCode = 200
 
-        mockRepository.getDeliveryOrders(object: IDeliveryOrderRepository.IOnGetDeliveryOrders{
-            override fun onSuccess(orders: List<DeliveryOrder>) {
-                Assert.assertEquals(FakeConstants.expectedMockResponse, orders)
-            }
+        runBlocking(Dispatchers.IO) {
+            mockRepository.getDeliveryOrders(object: IDeliveryOrderRepository.IOnGetDeliveryOrders{
+                override fun onSuccess(orders: List<DeliveryOrder>) {
+                    Assert.assertEquals(FakeConstants.expectedMockResponse, orders)
+                }
 
-            override fun onFailed(error: ErrorResponse) {}
-        })
+                override fun onFailed(error: ErrorResponse) {}
+            })
+        }
     }
 
     @Test
@@ -81,14 +85,15 @@ class MockRepositoryTestImpl {
         Shadows.shadowOf(Looper.getMainLooper()).idle()
 
         MockApiFakeRetrofitService.responseCode = 400
+        runBlocking(Dispatchers.IO) {
+            mockRepository.getDeliveryOrders(object: IDeliveryOrderRepository.IOnGetDeliveryOrders{
+                override fun onSuccess(orders: List<DeliveryOrder>) {}
 
-        mockRepository.getDeliveryOrders(object: IDeliveryOrderRepository.IOnGetDeliveryOrders{
-            override fun onSuccess(orders: List<DeliveryOrder>) {}
-
-            override fun onFailed(error: ErrorResponse) {
-                Assert.assertEquals(ErrorResponse("Server is unreachable", 400), error)
-            }
-        })
+                override fun onFailed(error: ErrorResponse) {
+                    Assert.assertEquals(ErrorResponse("Server is unreachable", 400), error)
+                }
+            })
+        }
     }
 
 }

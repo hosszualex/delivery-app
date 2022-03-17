@@ -4,8 +4,8 @@ import com.example.delivery_app.enums.toDeliveryStatusEnum
 import com.example.delivery_app.models.DeliveryOrder
 import com.example.delivery_app.models.ErrorResponse
 import com.example.delivery_app.models.GetOrdersResponse
-import com.example.delivery_app.services.IMockApiRetrofitService
-import com.example.delivery_app.services.MockApiRetrofitService
+import com.example.delivery_app.services.retrofit.IMockApiRetrofitService
+import com.example.delivery_app.services.retrofit.MockApiRetrofitService
 
 class MockApiRepositoryImpl : IDeliveryOrderRepository {
     private val retrofitService: IMockApiRetrofitService
@@ -14,7 +14,7 @@ class MockApiRepositoryImpl : IDeliveryOrderRepository {
         retrofitService = MockApiRetrofitService
     }
 
-    override fun getDeliveryOrders(listener: IDeliveryOrderRepository.IOnGetDeliveryOrders) {
+    override suspend fun getDeliveryOrders(listener: IDeliveryOrderRepository.IOnGetDeliveryOrders) {
         retrofitService.getOrders(object : IMockApiRetrofitService.IOnGetOrders {
             override fun onSuccess(data: ArrayList<GetOrdersResponse>) {
                 val deliveryOrders = getDeliveryOrdersFromResponse(data)
@@ -25,6 +25,20 @@ class MockApiRepositoryImpl : IDeliveryOrderRepository {
                 listener.onFailed(error)
             }
         })
+    }
+
+    override suspend fun updateAllDeliveryOrders(
+        orders: List<DeliveryOrder>,
+        listener: IDeliveryOrderRepository.IOnUpdateDeliveryOrder
+    ) {
+        //We would call a post API to update the dataset
+    }
+
+    override suspend fun updateDeliveryOrder(
+        order: DeliveryOrder,
+        listener: IDeliveryOrderRepository.IOnUpdateDeliveryOrder
+    ) {
+        //We would call a post API to update the data
     }
 
     private fun getDeliveryOrdersFromResponse(data: ArrayList<GetOrdersResponse>): List<DeliveryOrder> {

@@ -11,3 +11,7 @@ data class DeliveryOrder(
     val urlImage: String,
     var status: DeliveryStatusEnum = DeliveryStatusEnum.NEW
 )
+
+fun DeliveryOrder.toRoomDeliveryOrder(): RoomDeliveryOrder {
+    return RoomDeliveryOrder(id, description, price, deliverTo, deliveryAddress, urlImage, status.name)
+}

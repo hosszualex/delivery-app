@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.delivery_app"
-        minSdk 21
+        minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -47,6 +47,11 @@ dependencies {
 
     //=================PICASSO===============//
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //=================ROOM COMPONENTS===============//
+    implementation "androidx.room:room-ktx:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
+    androidTestImplementation "androidx.room:room-testing:2.4.2"
 
     //=================API COMPONENTS===============//
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

@@ -46,10 +46,8 @@ class OrdersAdapter(private val clickListener: IOnOrderClickListener): RecyclerV
         status: DeliveryStatusEnum,
         index: Int
     ) {
-        if (deliveryOrder.status != status) {
-            deliveryOrder.status = status
-            notifyItemChanged(index)
-        }
+        deliveryOrder.status = status
+        notifyItemChanged(index)
     }
 
     inner class ViewHolder(private val binding: DeliveryOrderItemBinding) : RecyclerView.ViewHolder(binding.root) {

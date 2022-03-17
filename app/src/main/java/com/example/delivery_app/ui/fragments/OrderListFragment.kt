@@ -18,11 +18,12 @@ import com.example.delivery_app.ui.activities.MainActivity
 import com.example.delivery_app.ui.adapters.OrdersAdapter
 import com.example.delivery_app.ui.dialogs.LoadingDialog
 import com.example.delivery_app.viewModels.OrderViewModel
+import com.example.delivery_app.viewModels.factories.OrderViewModelFactory
 
 class OrderListFragment: Fragment(), OrdersAdapter.IOnOrderClickListener {
 
     private lateinit var binding: FragmentOrderListBinding
-    private val viewModel: OrderViewModel by activityViewModels()
+    private val viewModel: OrderViewModel by activityViewModels { OrderViewModelFactory(requireActivity().applicationContext) }
     private lateinit var adapter: OrdersAdapter
     private lateinit var loadingDialog: LoadingDialog
 
@@ -38,8 +39,8 @@ class OrderListFragment: Fragment(), OrdersAdapter.IOnOrderClickListener {
         binding.rvPosts.adapter = adapter
     }
 
-    private val onUpdateItem = Observer<Pair<Int, DeliveryStatusEnum>> { pair ->
-        adapter.updateItemStatus(pair.first, pair.second)
+    private val onUpdateItem = Observer<DeliveryOrder> { deliveryOrder ->
+        adapter.updateItemStatus(deliveryOrder.id, deliveryOrder.status)
         (activity as MainActivity).onBackPressed()
     }
 
