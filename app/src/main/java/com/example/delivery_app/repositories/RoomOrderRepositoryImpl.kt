@@ -13,7 +13,6 @@ class RoomOrderRepositoryImpl(private val orderDao: IOrderDAO): IDeliveryOrderRe
         listener.onSuccess(getDeliveryOrdersFromRoomDeliveryOrders(orderDao.getOrdersByPrice()))
     }
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     override suspend fun updateAllDeliveryOrders(
         orders: List<DeliveryOrder>,

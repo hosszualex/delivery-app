@@ -50,7 +50,7 @@ class MockRepositoryImplTest {
     fun getOrdersFromResponseSuccessTest() {
         Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-        val value = method(mockRepository, FakeConstants.mockResponse)
+        val value = method(mockRepository, FakeConstants.mockApiResponse)
         Assert.assertEquals(FakeConstants.expectedMockResponse, value)
     }
 
@@ -66,7 +66,7 @@ class MockRepositoryImplTest {
     fun onGetRepositoryOrdersSuccessTest() {
         Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-        MockApiFakeRetrofitService.mockData = FakeConstants.mockResponse
+        MockApiFakeRetrofitService.mockData = FakeConstants.mockApiResponse
         MockApiFakeRetrofitService.responseCode = 200
 
         runBlocking(Dispatchers.IO) {
