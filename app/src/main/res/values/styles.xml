@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="LoadingDialog" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowMinWidthMinor">75%</item>
+    </style>
+
+    <style name="NormalText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="FloatingRefreshButton" parent="Widget.Design.FloatingActionButton">
+        <item name="android:layout_gravity">end|bottom</item>
+        <item name="android:backgroundTint">@color/creamWhite</item>
+        <item name="borderWidth">0dp</item>
+        <item name="android:src">@drawable/ic_refresh</item>
+    </style>
+</resources>

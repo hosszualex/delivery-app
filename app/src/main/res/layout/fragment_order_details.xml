@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.example.delivery_app.enums.DeliveryStatusEnum" />
+
+        <variable
+            name="item"
+            type="com.example.delivery_app.models.DeliveryOrder" />
+
+        <variable
+            name="viewModel"
+            type="com.example.delivery_app.viewModels.OrderViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/creamWhite"
+            android:clickable="true"
+            android:focusable="true">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/emeraldGreen"
+                app:cardCornerRadius="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:srcUrl="@{item.urlImage}"
+                    tools:src="@drawable/placeholder_flower"
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:backgroundTint="@color/emeraldGreen"
+                android:layout_marginTop="40dp"
+                app:cardCornerRadius="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvImage">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/NormalText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{item.description + ` to ` + item.deliverTo}"
+                        tools:text="Red Roses to Mihai" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/NormalText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{Float.toString(item.price) + ` €`}"
+                        tools:text="50.68 €" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/NormalText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{item.deliveryAddress}"
+                        tools:text="Strada Cuza Voda 7"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.cardview.widget.CardView>
+
+            <RadioGroup
+                android:id="@+id/rgStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="40dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                app:layout_constraintTop_toBottomOf="@id/cvDetails">
+
+                <RadioButton
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:onClick="@{() -> viewModel.setStatusToUpdate(DeliveryStatusEnum.NEW)}"
+                    android:checked="@{item.status == DeliveryStatusEnum.NEW ? true : false}"
+                    android:buttonTint="@color/radio_button_color_selector"
+                    android:text="@string/new_string" />
+
+                <RadioButton
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.setStatusToUpdate(DeliveryStatusEnum.PENDING)}"
+                    android:checked="@{item.status == DeliveryStatusEnum.PENDING ? true : false}"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/radio_button_color_selector"
+                    android:text="@string/pending" />
+
+                <RadioButton
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:onClick="@{() -> viewModel.setStatusToUpdate(DeliveryStatusEnum.DELIVERED)}"
+                    android:checked="@{item.status == DeliveryStatusEnum.DELIVERED ? true : false}"
+                    android:buttonTint="@color/radio_button_color_selector"
+                    android:text="@string/delivered" />
+
+            </RadioGroup>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:layout_marginVertical="40dp"
+                android:text="@string/save"
+                android:textSize="18sp"
+                android:letterSpacing="0"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/emeraldGreen"
+                android:textColor="@color/black"
+                android:onClick="@{() -> viewModel.onDoneClicked(item)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rgStatus" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.example.delivery_app.enums.DeliveryStatusEnum"/>
+
+        <variable
+            name="item"
+            type="com.example.delivery_app.models.DeliveryOrder" />
+
+        <variable
+            name="listener"
+            type="com.example.delivery_app.ui.adapters.OrdersAdapter.IOnOrderClickListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginVertical="4dp"
+        app:cardCornerRadius="8dp"
+        android:backgroundTint="@color/emeraldGreen"
+        android:onClick="@{() -> listener.onOrderClicked(item)}">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivStatus"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:tint="@color/black"
+                android:src="@{item.status == DeliveryStatusEnum.DELIVERED ? @drawable/ic_finished : item.status == DeliveryStatusEnum.PENDING ? @drawable/ic_pending : @drawable/ic_new}" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/ivStatus"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="8dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCaption"
+                    style="@style/NormalText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{item.description + ` to ` + item.deliverTo}"
+                    tools:text="This is a description" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPostedDate"
+                    style="@style/NormalText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{Float.toString(item.price) + ` €`}"
+                    tools:text="120 €" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
