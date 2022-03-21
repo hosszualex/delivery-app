@@ -22,7 +22,6 @@ abstract class OrderRoomDatabase: RoomDatabase() {
                     "order_database"
                 ).build()
                 INSTANCE = instance
-                // return instance
                 instance
             }
         }

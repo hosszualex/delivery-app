@@ -10,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.delivery_app.Constants
 import com.example.delivery_app.databinding.FragmentOrderListBinding
-import com.example.delivery_app.enums.DeliveryStatusEnum
 import com.example.delivery_app.extensions.addFragmentOnTopWithAnimationLeftToRight
 import com.example.delivery_app.models.DeliveryOrder
 import com.example.delivery_app.models.ErrorResponse
